@@ -9,6 +9,10 @@ use App\Http\Requests\StoreCategoryPost;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'rol.admin']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('dashboard.categories.create')->with('category', new Category);
+        return view('dashboard.categories.create')->with('category', new Category());
     }
 
     /**

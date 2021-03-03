@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\PostController;
+use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\CategoryController;
 
 /*
@@ -23,4 +24,10 @@ Route::resource('dashboard/posts', PostController::class);
 
 Route::resource('dashboard/categories', CategoryController::class);
 
+Route::resource('dashboard/users', UserController::class);
+
 Route::post('dashboard/posts/{post}/image', [PostController::class, 'image'])->name('posts.image');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
