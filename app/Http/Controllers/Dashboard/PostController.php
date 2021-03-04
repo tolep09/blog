@@ -73,7 +73,10 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::pluck('id', 'title');
-        $image = $post->image->name;
+        if (isset($post->image))
+        {
+            $image = $post->image->name;
+        }
         return view('dashboard.posts.edit')->with('post', $post)->with('categories', $categories);
     }
 
