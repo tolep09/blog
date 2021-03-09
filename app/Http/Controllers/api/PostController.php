@@ -48,6 +48,11 @@ class PostController extends ApiResponseController
 
     public function category(Category $category)
     {
-        return $this->successResponse(['posts' =>$category->post()->paginate(5), 'category' => $category]);
+        $posts = 
+        Post::join('post_images', 'post_images.post_id', '=', 'posts.id')->
+        join('categories', 'categories.id', '=', 'posts.category_id')->
+        select('posts.id', 'posts.title', 'posts.category_id', 'categories.title as category', 'post_images.name')->
+        orderBy('posts.created_at', 'asc')->where('categories.id', $category->id)->paginate(5);
+        return $this->successResponse(['posts' =>$posts, 'category' => $category]);
     }
 }

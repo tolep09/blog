@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\web\WebController;
 use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\CategoryController;
@@ -16,9 +17,17 @@ use App\Http\Controllers\dashboard\CategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+//carga el contenido desde vue
+Route::get('/', [WebController::class, 'index'])->name('index');
+//ruta gestionada por vue
+Route::get('/post/{id}', [WebController::class, 'detail']);
+//ruta gestionada por vue
+Route::get('/post-category/{id}', [WebController::class, 'postCategory']);
+//ruta gestionada por vue
+Route::get('/contact', [WebController::class, 'contact']);
+//ruta gestionada por vue
+Route::get('/categories', [WebController::class, 'categories']);
+
 
 Route::resource('dashboard/posts', PostController::class);
 

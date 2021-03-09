@@ -6,7 +6,8 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue').default;
+// window.Vue = require('vue').default;
+import router from './assets/router.js';
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,6 +21,8 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('modal-post', require('./components/PostModalComponent.vue').default);
+Vue.component('post-list-generic', require('./components/PostListGenericComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,4 +32,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    //render: h => h(App), en caso de tener un componente raiz para todo lo relacionado a vue
+    router
 });
