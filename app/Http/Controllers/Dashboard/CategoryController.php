@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Models\Category;
+use App\Helpers\CustomUrl;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryPost;
+use App\Http\Requests\UpdateCategoryPut;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -42,7 +45,32 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryPost $scp)
     {
-        Category::create($scp->validated());
+        $urlClean = '';
+        if ($scp->url_clean == '')
+        {
+            $urlClean = $scp->title;
+        } else
+        {
+            $urlClean = $scp->url_clean;
+        }
+
+        $urlClean = CustomUrl::urlTitle(CustomUrl::convertAccentedCharacters($urlClean, '-', true));
+
+        $request = $scp->validated();
+        $request['url_clean'] = $urlClean;
+
+        //dd($request['url_clean']);
+
+        $validator = Validator::make($request, StoreCategoryPost::myRules());
+
+        if ($validator->fails()) {
+            return redirect('dashboard/categories/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+
+        Category::create($request);
 
         return back()->with('message', 'Categoria guardada con éxito');
     }
@@ -76,9 +104,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategoryPost $scp, Category $category)
+    public function update(UpdateCategoryPut $ucp, Category $category)
     {
-        $category->update($scp->validated());
+        $category->update($ucp->validated());
 
         return back()->with('message', 'Categoria ' . $category->id . ' actualizada con éxito');
     }

@@ -1,41 +1,34 @@
 @extends('dashboard.master')
 
 @section('content')
-    <div class="col-lg-12 my-3">
-        <a href="{{ route('posts.create') }}" class="btn btn-success">+Nuevo Post</a>
-    </div>
+    
     <table class="table">
         <thead >
             <tr>
             <th scope="col">#</th>
-            <th scope="col">Título</th>
-            <th scope="col">Posteado</th>
-            <th scope="col">Categoría</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">email</th>
             <th scope="col">Creación</th>
             <th scope="col">Actualización</th>
             <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($posts as $post)
+            @foreach($contacts as $contact)
                 <tr>
-                    <td>{{ $post->id }}</td>
-                    <td>{{ $post->title }}</td>
-                    <td>{{ $post->posted }}</td>
-                    <td>{{ $post->category->title }}</td>
-                    <td>{{ $post->created_at->format('d-m-Y') }}</td>
-                    <td>{{ $post->updated_at->format('d-m-Y') }}</td>
+                    <td>{{ $contact->id }}</td>
+                    <td>{{ $contact->name }}</td>
+                    <td>{{ $contact->last_name }}</td>
+                    <td>{{ $contact->email }}</td>
+                    <td>{{ $contact->created_at->format('d-m-Y') }}</td>
+                    <td>{{ $contact->updated_at->format('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-dark">Ver</a>
-                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">
-                            Edit</a>
-
-                        <a href="{{ route('post-comment.post', $post->id) }}" class="btn btn-sm btn-primary">
-                            Comentarios</a>
+                        <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-sm btn-dark">Ver</a>
                         
                         <button class="btn btn-sm btn-danger" data-toggle="modal" 
                             data-target="#deleteModal" 
-                            data-id="{{ $post->id }}" type="button">Del
+                            data-id="{{ $contact->id }}" type="button">Del
                         </button>
                        
                     </td>
@@ -44,7 +37,7 @@
         </tbody>
     </table>
 
-    {{ $posts->links() }}
+    {{ $contacts->links() }}
 
     <!--Modal-->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -57,13 +50,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>¿Eliminar el post seleccionado?</p>
+                <p>¿Eliminar el contacto seleccionado?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 
-                <form id="formDelete" action="{{ route('posts.destroy', 0) }}" method="POST"
-                    data-action="{{ route('posts.destroy', 0) }}">
+                <form id="formDelete" action="{{ route('contact.destroy', 0) }}" method="POST"
+                    data-action="{{ route('contact.destroy', 0) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Borrar</button>
@@ -86,7 +79,7 @@
 
                 $('#formDelete').attr('action', (action +  id))
 
-                modal.find('.modal-title').text('Eliminar el post ' + id)
+                modal.find('.modal-title').text('Eliminar el contacto ' + id)
             });
         };
     </script>

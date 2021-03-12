@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Rol;
+use App\Models\Tag;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,9 +44,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    //relacion uno a uno con rol
     public function rol()
     {
         return $this->belongsTo(Rol::class);
     }
+    //hashear todos los password previo a su almacenamiento en la bd
+    public function setPasswordAttribute($val)
+    {
+        $this->attributes['password'] = Hash::make($val);
+    }
+    //relacion muchos a muchos entre tag, post y user
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+    
 }

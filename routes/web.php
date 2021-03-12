@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\web\WebController;
 use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\dashboard\UserController;
+use App\Http\Controllers\Dashboard\ContactController;
 use App\Http\Controllers\dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\PostCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,23 @@ Route::resource('dashboard/categories', CategoryController::class);
 
 Route::resource('dashboard/users', UserController::class);
 
+Route::resource('dashboard/contact', ContactController::class)->only([
+    'index', 'show', 'destroy'
+]);
+
+Route::resource('dashboard/post-comment', PostCommentController::class)->only([
+    'index', 'show', 'destroy'
+]);
+
+Route::delete('dashboard/posts/image-delete/{image}', [PostController::class, 'imageDelete'])->name('post.image-delete');
+
+Route::post('dashboard/post-comment/approved/{postComment}', [PostCommentController::class, 'approved']);
+
+Route::get('dashboard/post-comment/{post}/post', [PostCommentController::class, 'post'])->name('post-comment.post');
+
 Route::post('dashboard/posts/{post}/image', [PostController::class, 'image'])->name('posts.image');
+
+Route::post('dashboard/posts/content-image', [PostController::class, 'contentImage']);
 
 Auth::routes();
 

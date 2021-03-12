@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
 use App\Models\Category;
 use App\Models\PostImage;
 use Illuminate\Database\Eloquent\Model;
@@ -20,8 +21,20 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function image()
+    public function images()
     {
-        return $this->hasOne(PostImage::class);
+        return $this->hasMany(PostImage::class);
+    }
+
+    //relacion muchos a muchos con tag
+    // public function tags()
+    // {
+    //     return $this->belongsToMany(Tag::class);
+    // }
+    
+    //relacion de muchos a muchos entre tag, user y post
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }

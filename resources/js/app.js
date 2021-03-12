@@ -9,6 +9,27 @@ require('./bootstrap');
 // window.Vue = require('vue').default;
 import router from './assets/router.js';
 
+//-------ckeditor para lo referente a los post, incluyendo subir imagenes en el post
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { MyUploadAdapter } from "./assets/ckeditor/MyUploadAdapter.js";
+
+
+function MyCustomUploadAdapterPlugin( editor ) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        // Configure the URL to the upload script in your back-end here!
+        return new MyUploadAdapter( loader );
+    };
+}
+
+ClassicEditor.create(document.querySelector("#content"),{
+    extraPlugins: [ MyCustomUploadAdapterPlugin ],
+})
+    .then(editor => {})
+    .catch(error => {
+        console.error(error.stack);
+    });
+//---------- fin ckedior
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -35,3 +56,4 @@ const app = new Vue({
     //render: h => h(App), en caso de tener un componente raiz para todo lo relacionado a vue
     router
 });
+

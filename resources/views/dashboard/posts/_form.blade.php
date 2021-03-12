@@ -13,7 +13,13 @@
             <div class="form-group">
                 <label for="url_clean">Url limpia</label>
                 <input type="text" class="form-control" id="url_clean" name="url_clean" 
-                value="{{ old('url_clean', $post->url_clean) }}">
+                value="{{ old('url_clean', $post->url_clean) }}"
+                {{ $post->url_clean != '' ? 'disabled' : '' }}>
+                @error('url_clean')
+                    <span class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -47,6 +53,24 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label for="tags_id">Tags</label>
+                <select multiple class="form-control" name="tags_id[]" id="tags_id">
+                    <option value="">--Seleccione etiquetas--</option>
+                    @foreach($tags as $title => $id)
+                        <option {{ in_array($id, old('tags_id') ? : $post->tags()->pluck('id')->toArray()) ? 'selected' : '' }}
+                            value="{{ $id }}">{{ $title }}
+                        </option>
+                    @endforeach
+                </select>
+
+                @error('tags_id')
+                    <span class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
 
             <div class="form-group">
                 <label for="content">Contenido</label>
@@ -58,5 +82,7 @@
                     </span>
                 @enderror
             </div>
+
+            <input type="hidden" id="token" value="{{ csrf_token() }}">
             
             <button type="submit" class="btn btn-primary mb-2">Guardar</button>

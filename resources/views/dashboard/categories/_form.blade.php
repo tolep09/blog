@@ -16,7 +16,13 @@
             <div class="form-group">
                 <label for="url_clean">Url limpia</label>
                 <input type="text" class="form-control" id="url_clean" name="url_clean" 
-                value="{{ old('url_clean', $category->url_clean) }}">
+                value="{{ old('url_clean', $category->url_clean) }}"
+                {{ $category->url_clean != '' ? 'disabled' : '' }}>
+                @error('url_clean')
+                    <span class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             

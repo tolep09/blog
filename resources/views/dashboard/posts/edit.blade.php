@@ -24,6 +24,19 @@
                 <input type="submit" class="btn btn-success" value="Subir">
             </div>
         </div>
-    </form>   
+    </form> 
+
+    <div class="row">
+    @foreach ($post->images as $image)
+        <div class="col-3">
+            <img class="w-100 mb-3" src="{{ '/posts-images/'.$image->name }}">
+            <form action="{{ route('post.image-delete', $image->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+        </div>
+    @endforeach
+    </div>
 
 @endsection

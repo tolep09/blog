@@ -33,7 +33,7 @@ class PostController extends ApiResponseController
      */
     public function show(Post $post)
     {
-        $post->image; // cargar la informacion de la imagen
+        $post->images; // cargar la informacion de la imagen
         $post->category; // cargar la informacion de la categoria
         return $this->successResponse($post);
     }
