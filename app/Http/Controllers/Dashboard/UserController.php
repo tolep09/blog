@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserPost;
 use App\Http\Requests\UpdateUserPut;
@@ -44,13 +45,15 @@ class UserController extends Controller
      */
     public function store(StoreUserPost $sup)
     {
-        User::create([
+        $user = User::create([
             'name' => $sup['name'],
             'rol_id' => 2,
             'email' => $sup['email'],
             'password' => $sup['password'],
         ]);
-
+        
+        event(new UserRegistered($user));
+        
         return back()->with('message', 'Usuario guardado con éxito');
     }
 
@@ -73,6 +76,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('edit', $user);
         return view('dashboard.users.edit')->with('user', $user);
     }
 
@@ -85,6 +89,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserPut $uup, User $user)
     {
+        $this->authorize('update', $user);
         $user->update([
             'name' => $uup['name'],
             'email' => $uup['email'],

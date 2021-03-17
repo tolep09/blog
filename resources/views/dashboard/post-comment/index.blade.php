@@ -24,11 +24,14 @@
                     <td>{{ $postComment->created_at->format('d-m-Y') }}</td>
                     <td>{{ $postComment->updated_at->format('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ route('post-comment.show', $postComment->id) }}" class="btn btn-sm btn-dark">Ver</a>
+                        <a href="{{ route('post-comment.show', $postComment->id) }}" class="btn btn-sm btn-dark">
+                            <li class="fa fa-eye"></li>
+                        </a>
                         
                         <button class="btn btn-sm btn-danger" data-toggle="modal" 
                             data-target="#deleteModal" 
-                            data-id="{{ $postComment->id }}" type="button">Del
+                            data-id="{{ $postComment->id }}" type="button">
+                            <li class="fa fa-trash"></li>
                         </button>
                        
                     </td>

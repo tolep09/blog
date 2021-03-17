@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Throwable;
 use App\Traits\ApiResponse;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -44,28 +45,32 @@ class Handler extends ExceptionHandler
         // });
 
 
-        // if (env('APP_ENV') == 'local')
-        // {
-        //     $this->reportable(function (Throwable $e) {
-
-        //     });
-        // }
-        // else
-        // {
-            $this->renderable(function (Throwable $e, $request) {
-                //dd($e);
+        
+        
+        $this->renderable(function (Throwable $e, $request) {
+            
+            if (preg_match_all('.api\/.', $request->path()) > 0)
+            {
                 if ($e instanceof ModelNotFoundException)
                 {
                     return $this->errorResponse('Error', 404, 'El elemento buscado no existe');
                 }
-                
+                    
                 if ($e instanceof NotFoundHttpException)
                 {
                     return $this->errorResponse('Error', 404, 'El recurso buscado no existe');
                 }
-            });
+    
+                return $this->errorResponse('Error', 500, 'Error inesperado');
+            } else{
+                
+                $this->reportable(function (Throwable $e) {
 
-            return $this->errorResponse('Error', 500, 'Error inesperado');
-        //}
+                });
+            }
+           
+        });
+
+        
     }
 }

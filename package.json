@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^25.0.0",
+        "@fortawesome/fontawesome-free": "^5.15.2",
         "vue-plain-pagination": "^0.3.0",
         "vue-router": "^3.5.1"
     }

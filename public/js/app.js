@@ -2354,9 +2354,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window.Vue = require('vue').default;
 
 
+ //-------ckeditor para lo referente a los post, incluyendo subir imagenes en el post
 
 
- // ...
+
 
 function MyCustomUploadAdapterPlugin(editor) {
   editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
@@ -2369,7 +2370,8 @@ _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default().create(
   extraPlugins: [MyCustomUploadAdapterPlugin]
 }).then(function (editor) {})["catch"](function (error) {
   console.error(error.stack);
-});
+}); //---------- fin ckedior
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

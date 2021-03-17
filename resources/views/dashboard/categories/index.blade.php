@@ -2,7 +2,9 @@
 
 @section('content')
     <div class="col-lg-12 my-3">
-        <a href="{{ route('categories.create') }}" class="btn btn-success">+Nueva Categoria</a>
+        <a href="{{ route('categories.create') }}" class="btn btn-success">
+            <li class="fa fa-plus"></li> Nueva Categoria
+        </a>
     </div>
     <table class="table">
         <thead >
@@ -22,13 +24,17 @@
                     <td>{{ $category->created_at->format('d-m-Y') }}</td>
                     <td>{{ $category->updated_at->format('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ route('categories.show', $category->id) }}" class="btn btn-sm btn-dark">Ver</a>
+                        <a href="{{ route('categories.show', $category->id) }}" class="btn btn-sm btn-dark">
+                            <li class="fa fa-eye"></li>
+                        </a>
                         <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary">
-                            Edit</a>
+                            <li class="fa fa-edit"></li>
+                        </a>
                         
                         <button class="btn btn-sm btn-danger" data-toggle="modal" 
                             data-target="#deleteModal" 
-                            data-id="{{ $category->id }}" type="button">Del
+                            data-id="{{ $category->id }}" type="button">
+                            <li class="fa fa-trash"></li>
                         </button>
                        
                     </td>

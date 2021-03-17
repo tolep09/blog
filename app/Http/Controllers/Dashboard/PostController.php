@@ -7,12 +7,14 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\PostImage;
 use App\Helpers\CustomUrl;
+use App\Exports\PostsExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostPost;
 use App\Http\Requests\UpdatePostPut;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,11 +30,19 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //$posts = Post::orderBy('created_at', 'desc')->get();
         //with carga eager
-        $posts = Post::with('category')->orderBy('created_at', 'desc')->paginate(10);
+        $posts = Post::with('category')->
+        orderBy('created_at', 'desc');
+
+        if ($request->has('search'))
+        {
+            $posts = $posts->where('title', 'like', '%' . request('search') . '%');
+        }
+        
+        $posts = $posts->paginate(10);
         return view('dashboard.posts.index')->with('posts', $posts);
     }
 
@@ -189,5 +199,10 @@ class PostController extends Controller
 
         $image->delete();
         return back()->with('message', 'Imagen  eliminada con éxito');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PostsExport, 'posts.xlsx');
     }
 }

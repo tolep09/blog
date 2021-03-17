@@ -2,7 +2,21 @@
 
 @section('content')
     <div class="col-lg-12 my-3">
-        <a href="{{ route('posts.create') }}" class="btn btn-success">+Nuevo Post</a>
+        <a href="{{ route('posts.create') }}" class="btn btn-success">
+            <li class="fa fa-plus"></li> Nuevo Post
+        </a>
+        <a href="{{ route('posts.export') }}" class="btn btn-dark">
+            <li class="fa fa-file-excel"></li> Exportar
+        </a>
+    </div>
+    <div class="col-lg-12 my-3">
+        <form action="{{ route('posts.index') }}" method="GET" class="form-inline">
+            <input type="text" name="search" 
+                class="form-control mr-2" 
+                value="{{ request('search') }}"
+                placeholder="Buscar...">
+            <button type="submit" class="btn btn-primary"><li class="fa fa-search"></li></button>
+        </form>
     </div>
     <table class="table">
         <thead >
@@ -26,16 +40,21 @@
                     <td>{{ $post->created_at->format('d-m-Y') }}</td>
                     <td>{{ $post->updated_at->format('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-dark">Ver</a>
+                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-dark">
+                            <li class="fa fa-eye"></li>
+                        </a>
                         <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">
-                            Edit</a>
+                            <li class="fa fa-edit"></li>
+                        </a>
 
                         <a href="{{ route('post-comment.post', $post->id) }}" class="btn btn-sm btn-primary">
-                            Comentarios</a>
+                            <li class="fa fa-comment"></li>
+                        </a>
                         
                         <button class="btn btn-sm btn-danger" data-toggle="modal" 
                             data-target="#deleteModal" 
-                            data-id="{{ $post->id }}" type="button">Del
+                            data-id="{{ $post->id }}" type="button">
+                            <li class="fa fa-trash"></li>
                         </button>
                        
                     </td>
@@ -44,7 +63,9 @@
         </tbody>
     </table>
 
-    {{ $posts->links() }}
+    {{ $posts->appends([
+        'search' => request('search'),
+    ])->links() }}
 
     <!--Modal-->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

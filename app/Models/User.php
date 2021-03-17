@@ -59,5 +59,10 @@ class User extends Authenticatable
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    public function isAdmin()
+    {
+        return $this->rol->key == 'ROL_ADMIN';
+    }
     
 }

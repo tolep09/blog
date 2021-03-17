@@ -32,6 +32,7 @@ Route::get('/categories', [WebController::class, 'categories']);
 
 
 Route::resource('dashboard/posts', PostController::class);
+Route::get('dashboard/excel/posts-export', [PostController::class, 'export'])->name('posts.export');
 
 Route::resource('dashboard/categories', CategoryController::class);
 

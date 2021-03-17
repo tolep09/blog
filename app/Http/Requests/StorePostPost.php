@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Uppercase;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostPost extends FormRequest
@@ -15,7 +16,10 @@ class StorePostPost extends FormRequest
             'content' => 'required|min:6',
             'category_id' => 'required',
             'posted' => 'required',
-            'tags_id' => 'required'
+            'tags_id' => 'required',
+            // 'title' => [
+            //     'required', 'min:6', 'max:500', new Uppercase()
+            // ], incluye validacion personalizada
         ];
     }
     /**

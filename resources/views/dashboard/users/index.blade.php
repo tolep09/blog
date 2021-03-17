@@ -2,7 +2,9 @@
 
 @section('content')
     <div class="col-lg-12 my-3">
-        <a href="{{ route('users.create') }}" class="btn btn-success">+Nuevo Usuario</a>
+        <a href="{{ route('users.create') }}" class="btn btn-success">
+            <li class="fa fa-plus"></li> Nuevo Usuario
+        </a>
     </div>
     <table class="table">
         <thead >
@@ -22,13 +24,17 @@
                     <td>{{ $user->rol->key }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-dark">Ver</a>
+                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-dark">
+                            <li class="fa fa-eye"></li>
+                        </a>
                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary">
-                            Edit</a>
+                            <li class="fa fa-edit"></li>
+                        </a>
                         
                         <button class="btn btn-sm btn-danger" data-toggle="modal" 
                             data-target="#deleteModal" 
-                            data-id="{{ $user->id }}" type="button">Del
+                            data-id="{{ $user->id }}" type="button">
+                            <li class="fa fa-trash"></li>
                         </button>
                        
                     </td>
