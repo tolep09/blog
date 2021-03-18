@@ -8,10 +8,13 @@ require('./bootstrap');
 
 // window.Vue = require('vue').default;
 import router from './assets/router.js';
+import Vuelidate from 'vuelidate';
+import VueAWN from "vue-awesome-notifications";
 
 //-------ckeditor para lo referente a los post, incluyendo subir imagenes en el post
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { MyUploadAdapter } from "./assets/ckeditor/MyUploadAdapter.js";
+import Vue from 'vue';
 
 
 function MyCustomUploadAdapterPlugin( editor ) {
@@ -50,6 +53,9 @@ Vue.component('post-list-generic', require('./components/PostListGenericComponen
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Vue.use(Vuelidate);
+Vue.use(VueAWN);
 
 const app = new Vue({
     el: '#app',

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\PostController;
+use App\Http\Controllers\api\ContactController;
 use App\Http\Controllers\api\CategoryController;
 
 /*
@@ -32,3 +33,6 @@ Route::get('posts/{url_clean}/url_clean', [PostController::class, 'urlClean']);
 Route::get('categories/all', [CategoryController::class, 'all']);
 //obtener categorias por paginacion
 Route::get('categories', [CategoryController::class, 'index']);
+
+//almacenar un contacto
+Route::post('contact', [ContactController::class, 'store']);

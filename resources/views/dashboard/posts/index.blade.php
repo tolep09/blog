@@ -18,50 +18,61 @@
             <button type="submit" class="btn btn-primary"><li class="fa fa-search"></li></button>
         </form>
     </div>
-    <table class="table">
-        <thead >
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Título</th>
-            <th scope="col">Posteado</th>
-            <th scope="col">Categoría</th>
-            <th scope="col">Creación</th>
-            <th scope="col">Actualización</th>
-            <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($posts as $post)
-                <tr>
-                    <td>{{ $post->id }}</td>
-                    <td>{{ $post->title }}</td>
-                    <td>{{ $post->posted }}</td>
-                    <td>{{ $post->category->title }}</td>
-                    <td>{{ $post->created_at->format('d-m-Y') }}</td>
-                    <td>{{ $post->updated_at->format('d-m-Y') }}</td>
-                    <td>
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-dark">
-                            <li class="fa fa-eye"></li>
-                        </a>
-                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">
-                            <li class="fa fa-edit"></li>
-                        </a>
 
-                        <a href="{{ route('post-comment.post', $post->id) }}" class="btn btn-sm btn-primary">
-                            <li class="fa fa-comment"></li>
-                        </a>
-                        
-                        <button class="btn btn-sm btn-danger" data-toggle="modal" 
-                            data-target="#deleteModal" 
-                            data-id="{{ $post->id }}" type="button">
-                            <li class="fa fa-trash"></li>
-                        </button>
-                       
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">
+                Listado de Posts
+            </h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead class="text-primary">
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Posteado</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Creación</th>
+                    <th scope="col">Actualización</th>
+                    <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($posts as $post)
+                        <tr>
+                            <td>{{ $post->id }}</td>
+                            <td>{{ $post->title }}</td>
+                            <td>{{ $post->posted }}</td>
+                            <td>{{ $post->category->title }}</td>
+                            <td>{{ $post->created_at->format('d-m-Y') }}</td>
+                            <td>{{ $post->updated_at->format('d-m-Y') }}</td>
+                            <td>
+                                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-dark">
+                                    <li class="fa fa-eye"></li>
+                                </a>
+                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">
+                                    <li class="fa fa-edit"></li>
+                                </a>
+        
+                                <a href="{{ route('post-comment.post', $post->id) }}" class="btn btn-sm btn-primary">
+                                    <li class="fa fa-comment"></li>
+                                </a>
+                                
+                                <button class="btn btn-sm btn-danger" data-toggle="modal" 
+                                    data-target="#deleteModal" 
+                                    data-id="{{ $post->id }}" type="button">
+                                    <li class="fa fa-trash"></li>
+                                </button>
+                               
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
 
     {{ $posts->appends([
         'search' => request('search'),
