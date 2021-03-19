@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Throwable;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Str;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -49,6 +50,7 @@ class Handler extends ExceptionHandler
         
         $this->renderable(function (Throwable $e, $request) {
             
+            
             if (preg_match_all('.api\/.', $request->path()) > 0)
             {
                 if ($e instanceof ModelNotFoundException)
@@ -59,6 +61,11 @@ class Handler extends ExceptionHandler
                 if ($e instanceof NotFoundHttpException)
                 {
                     return $this->errorResponse('Error', 404, 'El recurso buscado no existe');
+                }
+
+                if ($e instanceof AuthenticationException)
+                {
+                    return $this->errorResponse('Error', 403, 'Acceso prohibido');
                 }
     
                 return $this->errorResponse('Error', 500, 'Error inesperado');
